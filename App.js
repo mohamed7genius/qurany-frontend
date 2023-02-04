@@ -12,6 +12,7 @@ import {
   ResetPasswordScreen,
   Dashboard,
 } from "./src/screens";
+import './src/i18n/i18n';
 
 const Stack = createStackNavigator();
 

@@ -4,7 +4,10 @@ import { theme } from "../core/theme";
 import { MaterialIcons } from "@expo/vector-icons";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Button from "../components/Button";
+import { useTranslation } from "react-i18next";
 export default function StartScreen({ navigation }) {
+  const { t, i18n } = useTranslation();
+  i18n.changeLanguage('ar');
   return (
     <MainScreenComponent>
       <Button
@@ -12,14 +15,14 @@ export default function StartScreen({ navigation }) {
         mode="contained"
         onPress={() => navigation.navigate("LoginScreen")}
       >
-        Login
+        {t(`startScreen.login`)}
       </Button>
       <Button
         iconName="person-add-alt"
         mode="contained"
         onPress={() => navigation.navigate("RegisterScreen")}
       >
-        Sign Up
+        {t(`startScreen.signUp`)}
       </Button>
       <TouchableOpacity
         style={styles.continueButtonContainer}
@@ -30,7 +33,7 @@ export default function StartScreen({ navigation }) {
           })
         }
       >
-        <Text style={styles.continue}>Continue as a guest</Text>
+        <Text style={styles.continue}>{t(`startScreen.guest`)}</Text>
         <MaterialIcons name="east" size={30} color="#000" />
       </TouchableOpacity>
     </MainScreenComponent>
@@ -45,7 +48,7 @@ const styles = StyleSheet.create({
   },
   continue: {
     marginHorizontal: 7,
-    fontStyle: "regularFont",
+    fontFamily: "regularFont",
     fontSize: 20,
     color: theme.colors.secondary,
   },

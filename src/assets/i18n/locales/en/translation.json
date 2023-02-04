@@ -1,0 +1,11 @@
+{
+    "main": {
+        "appName": "Qurany"
+    },
+    "startScreen": {
+        "login": "Login",
+        "signUp": "Sign Up",
+        "guest": "Continue as a guest",
+        "back": "Back"
+    }
+}

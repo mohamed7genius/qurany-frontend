@@ -11,12 +11,14 @@ import {
 import LangugeChanger from "./LangugeChanger";
 import BackButton from "./BackButton";
 import Background from "./Background";
+import { useTranslation } from "react-i18next";
 
 export default function MainScreenComponent({ goBack, children }) {
+  const { t, i18n } = useTranslation();
   return (
     <SafeAreaView style={styles.container}>
       <Background>
-        <View style={styles.buttonsContainer}>
+        <View style={i18n.dir() ? styles.buttonsContainerRTL : styles.buttonsContainer}>
           <View>{goBack && <BackButton goBack={goBack} />}</View>
           <LangugeChanger />
         </View>
@@ -25,7 +27,7 @@ export default function MainScreenComponent({ goBack, children }) {
             style={styles.logo}
             source={require("../assets/Images/logo.png")}
           />
-          <Text style={styles.qurany}>Qurany</Text>
+          <Text style={styles.qurany}>{t(`main.appName`)}</Text>
         </View>
         <KeyboardAvoidingView style={styles.keyBoardContainer} behavior="padding">
           <View style={styles.childContainer}>{children}</View>
@@ -65,6 +67,12 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     flexDirection: "row",
   },
+  buttonsContainerRTL: {
+    paddingTop: StatusBar.currentHeight + 10,
+    paddingHorizontal: 20,
+    justifyContent: "space-between",
+    flexDirection: "row-reverse",
+  },
   childContainer: {
     justifyContent: "center",
     paddingTop: "10%",
@@ -77,6 +85,7 @@ const styles = StyleSheet.create({
     height: 71,
   },
   qurany: {
+    fontFamily: 'regularFont',
     fontSize: 60,
     color: "#F5F5F5",
   },

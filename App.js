@@ -10,9 +10,13 @@ import {
   LoginScreen,
   RegisterScreen,
   ResetPasswordScreen,
-  Dashboard,
+  Settings,
+  Battery,
+  Support,
+  Profile,
+  Scoring,
 } from "./src/screens";
-import './src/i18n/i18n';
+import "./src/i18n/i18n";
 
 const Stack = createStackNavigator();
 
@@ -33,11 +37,15 @@ export default function App() {
           <Stack.Screen name="StartScreen" component={StartScreen} />
           <Stack.Screen name="LoginScreen" component={LoginScreen} />
           <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
-          <Stack.Screen name="Dashboard" component={Dashboard} />
           <Stack.Screen
             name="ResetPasswordScreen"
             component={ResetPasswordScreen}
           />
+          <Stack.Screen name="Settings" component={Settings} />
+          <Stack.Screen name="Battery" component={Battery} />
+          <Stack.Screen name="Support" component={Support} />
+          <Stack.Screen name="Profile" component={Profile} />
+          <Stack.Screen name="Scoring" component={Scoring} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

@@ -1,11 +1,37 @@
 {
     "main": {
-        "appName": "Qurany"
+        "appName": "Qurany",
+        "language":"EN"
+
     },
     "startScreen": {
         "login": "Login",
         "signUp": "Sign Up",
         "guest": "Continue as a guest",
         "back": "Back"
+    },
+    "loginScreen":{
+        "forgot":"Forgot your password",
+        "email":"Email",
+        "password":"Password"
+
+    },
+    "registerScreen":{
+        "name":"Name"
+    },
+    "resetPasswordScreen":{
+       "restoreText":"Restore Password",
+       "restoreButton":"Restore",
+       "emailAddress":"E-mail address",
+        "sentEmail":"You will receive email with password reset link"
+    },
+    "errors":{
+        "emailError":"Email can't be empty",
+        "invalidEmailError":"We need a valid email address",
+        "invalidPasswordError":"Password must be at least 5 characters long",
+        "passwordError":"Password can't be empty",
+        "nameError":"Name can't be empty"
     }
+
+    
 }

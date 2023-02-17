@@ -2,12 +2,12 @@ import React from "react";
 import MainScreenComponent from "../components/MainScreenComponent";
 import { theme } from "../core/theme";
 import { MaterialIcons } from "@expo/vector-icons";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import Button from "../components/Button";
 import { useTranslation } from "react-i18next";
 export default function StartScreen({ navigation }) {
   const { t, i18n } = useTranslation();
-  i18n.changeLanguage('ar');
+
   return (
     <MainScreenComponent>
       <Button
@@ -25,22 +25,36 @@ export default function StartScreen({ navigation }) {
         {t(`startScreen.signUp`)}
       </Button>
       <TouchableOpacity
-        style={styles.continueButtonContainer}
+        style={
+          i18n.dir() == "ltr"
+            ? styles.continueButtonContainer
+            : styles.continueButtonContainerRTL
+        }
         onPress={() =>
           navigation.reset({
             index: 0,
-            routes: [{ name: "Dashboard" }],
+            routes: [{ name: "Battery" }],
           })
         }
       >
         <Text style={styles.continue}>{t(`startScreen.guest`)}</Text>
-        <MaterialIcons name="east" size={30} color="#000" />
+        <MaterialIcons
+          name={i18n.dir() == "ltr" ? "east" : "west"}
+          size={30}
+          color="#000"
+        />
       </TouchableOpacity>
     </MainScreenComponent>
   );
 }
 const styles = StyleSheet.create({
   continueButtonContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: "7%",
+    flexDirection: "row-reverse",
+  },
+  continueButtonContainerRTL: {
     alignItems: "center",
     justifyContent: "center",
     marginTop: "7%",

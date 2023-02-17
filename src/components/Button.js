@@ -2,13 +2,16 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Button as PaperButton } from "react-native-paper";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 
 export default function Button({ mode, style, iconName, ...props }) {
+  const { t, i18n } = useTranslation();
+
   return (
     <View style={styles.button}>
       {iconName && (
         <MaterialIcons
-          style={styles.icon}
+          style={i18n.dir() == "ltr" ? styles.icon : styles.iconRTL}
           name={iconName}
           size={90}
           color="rgba(255,255,255,0.5)"
@@ -33,7 +36,13 @@ const styles = StyleSheet.create({
     zIndex: 3,
     position: "absolute",
     bottom: -13,
-    right: 0,
+    right: -7,
+  },
+  iconRTL: {
+    zIndex: 3,
+    position: "absolute",
+    bottom: -13,
+    left: -7,
   },
   innerButton: {
     backgroundColor: "#181818",

@@ -6,9 +6,11 @@ import TextInput from "../components/TextInput";
 import { MaterialIcons } from "@expo/vector-icons";
 import { theme } from "../core/theme";
 import { emailValidator } from "../helpers/emailValidator";
+import { useTranslation } from "react-i18next";
 import { passwordValidator } from "../helpers/passwordValidator";
 
 export default function LoginScreen({ navigation }) {
+  const { t, i18n } = useTranslation();
   const [email, setEmail] = useState({ value: "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });
 
@@ -22,14 +24,14 @@ export default function LoginScreen({ navigation }) {
     }
     navigation.reset({
       index: 0,
-      routes: [{ name: "Dashboard" }],
+      routes: [{ name: "Battery" }],
     });
   };
 
   return (
     <MainScreenComponent goBack={() => navigation.goBack()}>
       <TextInput
-        label="Email"
+        label={t(`loginScreen.email`)}
         returnKeyType="next"
         value={email.value}
         onChangeText={(text) => setEmail({ value: text, error: "" })}
@@ -41,7 +43,7 @@ export default function LoginScreen({ navigation }) {
         keyboardType="email-address"
       />
       <TextInput
-        label="Password"
+        label={t(`loginScreen.password`)}
         returnKeyType="done"
         value={password.value}
         onChangeText={(text) => setPassword({ value: text, error: "" })}
@@ -50,14 +52,16 @@ export default function LoginScreen({ navigation }) {
         secureTextEntry
       />
 
-      <Button 
-      iconName="login"
-      mode="contained" onPress={onLoginPressed}>
-        Login
+      <Button iconName="login" mode="contained" onPress={onLoginPressed}>
+        {t(`startScreen.login`)}
       </Button>
       <View>
         <TouchableOpacity
-          style={styles.forgotPassword}
+          style={
+            i18n.dir() == "ltr"
+              ? styles.forgotPassword
+              : styles.forgotPasswordRTL
+          }
           onPress={() => navigation.navigate("ResetPasswordScreen")}
         >
           <MaterialIcons
@@ -65,7 +69,7 @@ export default function LoginScreen({ navigation }) {
             size={24}
             color="black"
           />
-          <Text style={styles.forgot}>Forgot your password?</Text>
+          <Text style={styles.forgot}>{t(`loginScreen.forgot`)}</Text>
         </TouchableOpacity>
       </View>
     </MainScreenComponent>
@@ -76,6 +80,12 @@ const styles = StyleSheet.create({
   forgotPassword: {
     justifyContent: "center",
     flexDirection: "row",
+    alignItems: "center",
+    marginTop: "7%",
+  },
+  forgotPasswordRTL: {
+    justifyContent: "center",
+    flexDirection: "row-reverse",
     alignItems: "center",
     marginTop: "7%",
   },

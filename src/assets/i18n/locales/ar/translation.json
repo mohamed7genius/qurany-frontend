@@ -1,11 +1,35 @@
 {
     "main": {
-        "appName": "قراني"
+        "appName": "قراني",
+        "language":"عربي"
     },
     "startScreen": {
         "login": "تسجيل الدخول",
         "signUp": "التسجيل",
         "guest": "استمرار ك ضيف",
         "back": "رجوع"
+    },
+    "loginScreen":{
+        "forgot":"نسيت كلمة المرور",
+        "email":"البريد الألكتروني",
+        "password":"كلمة المرور"
+
+    },
+    "registerScreen":{
+        "name":"الأسم"
+    },
+    "resetPasswordScreen":{
+        "restoreText":"تعين كلمة مرور جديدة",
+        "restoreButton":"تعين",
+        "emailAddress":"البريد الألكتروني",
+         "sentEmail":"ستتلقى بريدًا إلكترونيًا يحتوي على رابط إعادة تعيين كلمة المرور"
+     },
+     "errors":{
+        "emailError":"يرجي أدخال بريد إلكتروني .",
+        "invalidEmailError":"يرجي أدخال بريد إلكتروني صالح.",
+        "invalidPasswordError":"يجب أن تتكون كلمة المرور من 5 أحرف على الأقل",
+        "passwordError": "يرجي أدخال كلمة مرور ",
+        "nameError":"يرجي أدخال أسم مستخدم "
     }
+
 }

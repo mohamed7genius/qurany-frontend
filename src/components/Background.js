@@ -4,7 +4,7 @@ import { ImageBackground, StyleSheet } from "react-native";
 export default function Background({ children }) {
   return (
     <ImageBackground
-      source={require("../assets/Images/main.png")}
+      source={require("../assets/images/main.png")}
       style={styles.background}
     >
       {children}
@@ -14,6 +14,6 @@ export default function Background({ children }) {
 
 const styles = StyleSheet.create({
   background: {
-    height: "100%",
+    flex: 1,
   },
 });

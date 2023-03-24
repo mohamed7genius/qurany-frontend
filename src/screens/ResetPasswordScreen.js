@@ -5,7 +5,6 @@ import TextInput from "../components/TextInput";
 import Button from "../components/Button";
 import { emailValidator } from "../helpers/emailValidator";
 import { useTranslation } from "react-i18next";
-import { View } from "react-native-web";
 
 export default function ResetPasswordScreen({ navigation }) {
   const { t, i18n } = useTranslation();

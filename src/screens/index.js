@@ -7,3 +7,4 @@ export { default as Battery } from "./Battery";
 export { default as Support } from "./Support";
 export { default as Profile } from "./Profile";
 export { default as Scoring } from "./Scoring";
+export { default as Sura } from "./Sura";

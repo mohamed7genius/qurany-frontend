@@ -17,7 +17,8 @@ export default function TextInput({
       <Input
         textColor="black"
         activeUnderlineColor="#606060"
-        style={i18n.dir() == "ltr" ? styles.input : styles.inputRTL}
+        style={styles.input}
+        contentStyle={{fontFamily: "regularFont",}}
         {...props}
       />
       {description && !errorText ? (
@@ -36,15 +37,6 @@ export default function TextInput({
 
 const styles = StyleSheet.create({
   input: {
-    height: 50,
-    margin: 10,
-    borderRadius: 10,
-    borderColor: "#606060",
-    borderStyle: "solid",
-    background: "#F0F0F0",
-    fontFamily: "regularFont",
-  },
-  inputRTL: {
     height: 50,
     margin: 10,
     borderRadius: 10,

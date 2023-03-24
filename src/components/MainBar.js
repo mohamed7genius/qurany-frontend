@@ -7,8 +7,8 @@ export default function MainBar() {
   const navigation = useNavigation();
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.main}>
+    <SafeAreaView style={styles.main}>
+      <View style={styles.container}>
         <TouchableOpacity onPress={() => navigation.navigate("Support")}>
           <MaterialIcons
             style={styles.support}
@@ -38,22 +38,22 @@ export default function MainBar() {
   );
 }
 const styles = StyleSheet.create({
+  main: {
+    width: "100%",
+    height: 50,
+    justifyContent: 'flex-end',
+    alignContent: 'flex-end',
+    alignSelf: 'flex-end',
+  },
   container: {
     width: "100%",
     height: "100%",
-    alignItems: "center",
-    justifyContent: "flex-end",
     flex: 1,
-  },
-  main: {
-    width: "99%",
-    height: 50,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
     backgroundColor: "#181818",
     alignItems: "center",
     justifyContent: "space-evenly",
     flexDirection: "row-reverse",
-    zIndex: 5,
   },
 });

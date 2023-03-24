@@ -5,13 +5,13 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 
 export default function Button({ mode, style, iconName, ...props }) {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
 
   return (
     <View style={styles.button}>
       {iconName && (
         <MaterialIcons
-          style={i18n.dir() == "ltr" ? styles.icon : styles.iconRTL}
+          style={styles.icon}
           name={iconName}
           size={90}
           color="rgba(255,255,255,0.5)"
@@ -33,12 +33,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   icon: {
-    zIndex: 3,
-    position: "absolute",
-    bottom: -13,
-    right: -7,
-  },
-  iconRTL: {
     zIndex: 3,
     position: "absolute",
     bottom: -13,

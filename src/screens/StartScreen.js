@@ -25,11 +25,7 @@ export default function StartScreen({ navigation }) {
         {t(`startScreen.signUp`)}
       </Button>
       <TouchableOpacity
-        style={
-          i18n.dir() == "ltr"
-            ? styles.continueButtonContainer
-            : styles.continueButtonContainerRTL
-        }
+        style={styles.continueButtonContainer}
         onPress={() =>
           navigation.reset({
             index: 0,
@@ -53,12 +49,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: "7%",
     flexDirection: "row-reverse",
-  },
-  continueButtonContainerRTL: {
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: "7%",
-    flexDirection: "row",
   },
   continue: {
     marginHorizontal: 7,

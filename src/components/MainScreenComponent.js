@@ -18,20 +18,14 @@ export default function MainScreenComponent({ goBack, children }) {
   return (
     <SafeAreaView style={{ ...styles.container, direction: i18n.dir() }}>
       <Background>
-        <View
-          style={
-            i18n.dir() == "rtl"
-              ? styles.buttonsContainer
-              : styles.buttonsContainerRTL
-          }
-        >
+        <View style={styles.buttonsContainer} >
           <View>{goBack && <BackButton goBack={goBack} />}</View>
           <LangugeChanger />
         </View>
-        <View style={i18n.dir() == "rtl" ? styles.header : styles.headerRTL}>
+        <View style={styles.header}>
           <Image
             style={styles.logo}
-            source={require("../assets/Images/logo.png")}
+            source={require("../assets/images/logo.png")}
           />
           <Text style={styles.qurany}>{t(`main.appName`)}</Text>
         </View>
@@ -48,12 +42,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
-  },
-  headerRTL: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "row-reverse",
   },
   container: {
     paddingHorizontal: "1%",
@@ -77,12 +65,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     justifyContent: "space-between",
     flexDirection: "row",
-  },
-  buttonsContainerRTL: {
-    paddingTop: StatusBar.currentHeight + 10,
-    paddingHorizontal: 20,
-    justifyContent: "space-between",
-    flexDirection: "row-reverse",
   },
   childContainer: {
     justifyContent: "center",

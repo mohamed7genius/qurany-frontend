@@ -2,12 +2,12 @@ import React from "react";
 import { StyleSheet, Text, View, ScrollView } from "react-native";
 import Background from "../components/Background";
 import MainBar from "../components/MainBar";
-import Hasanat from "../components/Hasanat";
+import Header from "../components/Header";
 export default function Profile() {
   return (
     <Background>
-      <Hasanat />
-      <Text style={{ fontSize: 25, color: "white" }}>Profile</Text>
+      <Header />
+      <Text style={{ fontSize: 25, color: "white", fontFamily: "regularFont" }}>Profile</Text>
       <MainBar />
     </Background>
   );

@@ -3,8 +3,7 @@ import { TouchableOpacity, StyleSheet, Text } from "react-native";
 import { useTranslation } from "react-i18next";
 import { MaterialIcons } from "@expo/vector-icons";
 export default function LangugeChanger() {
-  const { i18n, locale, t } = useTranslation();
-
+  const { i18n } = useTranslation();
   return (
     <TouchableOpacity
       style={styles.container}
@@ -17,7 +16,7 @@ export default function LangugeChanger() {
       }}
     >
       <MaterialIcons name="language" size={30} color="white" />
-      <Text style={styles.langugeChanger}>{t(`main.language`)}</Text>
+      <Text style={styles.langugeChanger}>{i18n.language == 'ar' ? 'EN' : 'AR'}</Text>
     </TouchableOpacity>
   );
 }
@@ -26,6 +25,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
+    margin: 5,
   },
   containerRTL: {
     backgroundColor: "red",
@@ -35,5 +35,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "#fff",
     fontFamily: "regularFont",
+    marginTop: 5,
   },
 });

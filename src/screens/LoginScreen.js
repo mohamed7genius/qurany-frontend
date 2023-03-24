@@ -57,11 +57,7 @@ export default function LoginScreen({ navigation }) {
       </Button>
       <View>
         <TouchableOpacity
-          style={
-            i18n.dir() == "ltr"
-              ? styles.forgotPassword
-              : styles.forgotPasswordRTL
-          }
+          style={styles.forgotPassword}
           onPress={() => navigation.navigate("ResetPasswordScreen")}
         >
           <MaterialIcons
@@ -83,13 +79,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: "7%",
   },
-  forgotPasswordRTL: {
-    justifyContent: "center",
-    flexDirection: "row-reverse",
-    alignItems: "center",
-    marginTop: "7%",
-  },
-
   forgot: {
     marginHorizontal: 7,
     fontFamily: "regularFont",

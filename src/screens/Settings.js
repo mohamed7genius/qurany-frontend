@@ -3,11 +3,11 @@ import { useState, useRef } from "react";
 import { StyleSheet, Text, View, ScrollView } from "react-native";
 import Background from "../components/Background";
 import MainBar from "../components/MainBar";
-import Hasanat from "../components/Hasanat";
+import Header from "../components/Header";
 export default function Settings() {
   return (
     <Background>
-      <Hasanat />
+      <Header />
 
       <MainBar />
     </Background>

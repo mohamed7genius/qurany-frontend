@@ -15,6 +15,7 @@ import {
   Support,
   Profile,
   Scoring,
+  Sura
 } from "./src/screens";
 import "./src/i18n/i18n";
 
@@ -46,6 +47,7 @@ export default function App() {
           <Stack.Screen name="Support" component={Support} />
           <Stack.Screen name="Profile" component={Profile} />
           <Stack.Screen name="Scoring" component={Scoring} />
+          <Stack.Screen name="Sura" component={Sura} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

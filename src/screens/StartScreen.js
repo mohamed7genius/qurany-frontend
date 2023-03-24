@@ -2,9 +2,12 @@ import React from "react";
 import MainScreenComponent from "../components/MainScreenComponent";
 import { theme } from "../core/theme";
 import { MaterialIcons } from "@expo/vector-icons";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import Button from "../components/Button";
+import { useTranslation } from "react-i18next";
 export default function StartScreen({ navigation }) {
+  const { t, i18n } = useTranslation();
+
   return (
     <MainScreenComponent>
       <Button
@@ -12,26 +15,30 @@ export default function StartScreen({ navigation }) {
         mode="contained"
         onPress={() => navigation.navigate("LoginScreen")}
       >
-        Login
+        {t(`startScreen.login`)}
       </Button>
       <Button
         iconName="person-add-alt"
         mode="contained"
         onPress={() => navigation.navigate("RegisterScreen")}
       >
-        Sign Up
+        {t(`startScreen.signUp`)}
       </Button>
       <TouchableOpacity
         style={styles.continueButtonContainer}
         onPress={() =>
           navigation.reset({
             index: 0,
-            routes: [{ name: "Dashboard" }],
+            routes: [{ name: "Battery" }],
           })
         }
       >
-        <Text style={styles.continue}>Continue as a guest</Text>
-        <MaterialIcons name="east" size={30} color="#000" />
+        <Text style={styles.continue}>{t(`startScreen.guest`)}</Text>
+        <MaterialIcons
+          name={i18n.dir() == "ltr" ? "east" : "west"}
+          size={30}
+          color="#000"
+        />
       </TouchableOpacity>
     </MainScreenComponent>
   );
@@ -41,11 +48,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: "7%",
-    flexDirection: "row",
+    flexDirection: "row-reverse",
   },
   continue: {
     marginHorizontal: 7,
-    fontStyle: "regularFont",
+    fontFamily: "regularFont",
     fontSize: 20,
     color: theme.colors.secondary,
   },

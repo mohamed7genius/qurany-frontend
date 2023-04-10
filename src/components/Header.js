@@ -1,6 +1,6 @@
 import React from "react";
-import { Image, StyleSheet, View, Text } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
+import {Image, StyleSheet, View, Text} from "react-native";
+import {MaterialIcons} from "@expo/vector-icons";
 
 export default function Header() {
   return (
@@ -32,28 +32,28 @@ const styles = StyleSheet.create({
   },
   hasanatContainer: {
     flexDirection: "row",
-    justifyContent: 'center',
-    alignItems: 'flex-end',
+    justifyContent: "center",
+    alignItems: "flex-end",
     marginTop: 10,
   },
   hasanatImage: {
     marginHorizontal: 10,
   },
   score: {
-    fontFamily: 'regularFont',
-    color: '#181818',
+    fontFamily: "regularFont",
+    color: "#181818",
     fontSize: 20,
   },
   levelContainer: {
     flexDirection: "row",
-    justifyContent: 'center',
-    alignItems: 'flex-end',
+    justifyContent: "center",
+    alignItems: "flex-end",
     marginTop: 10,
   },
   level: {
     marginHorizontal: 5,
-    fontFamily: 'regularFont',
-    color: '#181818',
+    fontFamily: "regularFont",
+    color: "#181818",
     fontSize: 20,
-  }
+  },
 });

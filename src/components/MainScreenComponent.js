@@ -18,11 +18,11 @@ export default function MainScreenComponent({ goBack, children }) {
   return (
     <SafeAreaView style={{ ...styles.container, direction: i18n.dir() }}>
       <Background>
-        <View style={styles.buttonsContainer} >
+        <View style={i18n.dir()==="rtl" ? styles.buttonsContainerRTL : styles.buttonsContainer} >
           <View>{goBack && <BackButton goBack={goBack} />}</View>
           <LangugeChanger />
         </View>
-        <View style={styles.header}>
+         <View  style={i18n.dir()==="rtl" && Platform.OS === "android" ? styles.headerRTL : styles.header} >
           <Image
             style={styles.logo}
             source={require("../assets/images/logo.png")}
@@ -37,11 +37,17 @@ export default function MainScreenComponent({ goBack, children }) {
   );
 }
 const styles = StyleSheet.create({
-  header: {
+  headerRTL: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
+  },
+  header: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row-reverse",
   },
   container: {
     paddingHorizontal: "1%",
@@ -61,6 +67,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: "5%",
   },
   buttonsContainer: {
+    paddingTop: StatusBar.currentHeight + 10,
+    paddingHorizontal: 20,
+    justifyContent: "space-between",
+    flexDirection: "row-reverse",
+  },
+  buttonsContainerRTL: {
     paddingTop: StatusBar.currentHeight + 10,
     paddingHorizontal: 20,
     justifyContent: "space-between",

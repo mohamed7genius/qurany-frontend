@@ -3,6 +3,7 @@ import { View, StyleSheet, Text } from "react-native";
 import { TextInput as Input } from "react-native-paper";
 import { theme } from "../core/theme";
 import { useTranslation } from "react-i18next";
+ 
 
 export default function TextInput({
   errorText,
@@ -11,14 +12,15 @@ export default function TextInput({
   ...props
 }) {
   const { i18n, t } = useTranslation();
+ 
 
   return (
-    <View style={styles.container}>
+    <View>
       <Input
         textColor="black"
         activeUnderlineColor="#606060"
-        style={styles.input}
-        contentStyle={{fontFamily: "regularFont",}}
+        style={styles.input }
+        contentStyle={{fontFamily: "regularFont"}}
         {...props}
       />
       {description && !errorText ? (
@@ -31,7 +33,7 @@ export default function TextInput({
           {t(errorText)}
         </Text>
       ) : null}
-    </View>
+     </View>
   );
 }
 
@@ -39,12 +41,13 @@ const styles = StyleSheet.create({
   input: {
     height: 50,
     margin: 10,
-    borderRadius: 10,
+     borderRadius: 10,
     borderColor: "#606060",
     borderStyle: "solid",
     background: "#F0F0F0",
     fontFamily: "regularFont",
-  },
+ 
+},
   error: {
     fontSize: 13,
     textAlign: "center",

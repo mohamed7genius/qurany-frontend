@@ -5,8 +5,7 @@ import { Provider } from "react-native-paper";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { theme } from "./src/core/theme";
-import RNRestart from 'react-native-restart';
-
+ 
  import {
   StartScreen,
   LoginScreen,
@@ -19,19 +18,12 @@ import RNRestart from 'react-native-restart';
   Scoring,
   Sura
 } from "./src/screens";
-import "./src/i18n/i18n";
-import { I18nManager } from "react-native";
-
- const Stack = createStackNavigator();
- if(!I18nManager.isRTL){
-  I18nManager.forceRTL(true);
-  RNRestart.Restart();
-}
- 
+import "./src/i18n/i18n"; 
+const Stack = createStackNavigator(); 
 export default function App() {
 
 
-   const { state } = useFont();
+  const { state } = useFont();
   if (!state) {
     return <></>;
   }

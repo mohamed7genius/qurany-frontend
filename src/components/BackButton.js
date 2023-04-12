@@ -8,8 +8,8 @@ export default function BackButton({ goBack }) {
   return (
     <TouchableOpacity
       onPress={goBack}
-      style={styles.container}
-    >
+      style={i18n.dir()==="rtl" && Platform.OS === "android" ? styles.containerRTL : styles.container}      
+      >
       <Text style={styles.backText}>{t(`startScreen.back`)}</Text>
       <MaterialIcons
         name={i18n.dir() == "rtl" ? "east" : "west"}
@@ -21,8 +21,13 @@ export default function BackButton({ goBack }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  containerRTL: {
     flexDirection: "row-reverse",
+    alignItems: "center",
+    margin: 5,
+  },
+  container: {
+    flexDirection: "row",
     alignItems: "center",
     margin: 5,
   },

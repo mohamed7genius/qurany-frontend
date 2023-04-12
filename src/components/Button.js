@@ -11,7 +11,7 @@ export default function Button({ mode, style, iconName, ...props }) {
     <View style={styles.button}>
       {iconName && (
         <MaterialIcons
-          style={styles.icon}
+          style={i18n.dir()==="rtl" && Platform.OS === "android" ? styles.iconRTL : styles.icon}
           name={iconName}
           size={90}
           color="rgba(255,255,255,0.5)"
@@ -38,6 +38,13 @@ const styles = StyleSheet.create({
     bottom: -13,
     left: -7,
   },
+  iconRTL: {
+    zIndex: 3,
+    position: "absolute",
+    bottom: -13,
+    right: -16,
+    transform: [{rotateY: '180deg'}]
+   },
   innerButton: {
     backgroundColor: "#181818",
     marginTop: 15,

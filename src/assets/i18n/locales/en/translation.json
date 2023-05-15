@@ -31,7 +31,16 @@
         "invalidPasswordError":"Password must be at least 5 characters long",
         "passwordError":"Password can't be empty",
         "nameError":"Name can't be empty"
+    },
+    "sura": {
+        "listenTo": "Listen to ayat",
+        "stop": "Stop",
+        "startRec": "Hold to start recording",
+        "stopRec": "Remove your finger to stop recording",
+        "loadingResponse": "Analysing your record",
+        "loading": "Loading .."
+    },
+    "qari": {
+        "menshawi": "Mohamed Sediq El Menshawi"
     }
-
-    
 }

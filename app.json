@@ -14,14 +14,14 @@
         [
           "expo-av",
           {
-            "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone."
+            "microphonePermission": "Allow Qurany App to access your microphone."
           }
         ],
         [
           "@react-native-voice/voice",
           {
-            "microphonePermission": "Allow Voice to Text to access the microphone",
-            "speechRecognitionPermission": "Allow Voice to securely recognize user speech"
+            "microphonePermission": "Allow Qurany App to access your microphone.",
+            "speechRecognitionPermission": "Allow Qurany App to securely recognize your speech."
           }
         ]
       ]

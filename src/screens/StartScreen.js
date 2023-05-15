@@ -26,11 +26,13 @@ export default function StartScreen({ navigation }) {
       </Button>
       <TouchableOpacity
           style={i18n.dir()==="rtl" && Platform.OS === "android" ? styles.continueButtonContainerRTL : styles.continueButtonContainer}      
-          onPress={() =>
-          navigation.reset({
-            index: 0,
-            routes: [{ name: "Battery" }],
-          })
+          onPress={() => {
+            console.log('set loading screen!');
+            navigation.reset({
+              index: 0,
+              routes: [{ name: "Battery" }],
+            });
+          }
         }
       >
         <Text style={styles.continue}>{t(`startScreen.guest`)}</Text>

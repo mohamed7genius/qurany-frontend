@@ -3,24 +3,29 @@ import { TouchableOpacity, StyleSheet, Text } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 
-export default function BackButton({ goBack }) {
+export default function BackButton({ goBack, extraStyle={}, iconColor="white" }) {
   const { t, i18n } = useTranslation();
   return (
     <TouchableOpacity
       onPress={goBack}
-      style={styles.container}
-    >
-      <Text style={styles.backText}>{t(`startScreen.back`)}</Text>
+      style={i18n.dir()==="rtl" ? styles.containerRTL : styles.container}      
+      >
+      <Text style={extraStyle ? [styles.backText, extraStyle] : styles.backText}>{t(`startScreen.back`)}</Text>
       <MaterialIcons
         name={i18n.dir() == "rtl" ? "east" : "west"}
         size={30}
-        color="white"
+        color={iconColor}
       />
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
+  containerRTL: {
+    flexDirection: "row",
+    alignItems: "center",
+    margin: 5,
+  },
   container: {
     flexDirection: "row-reverse",
     alignItems: "center",

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useContext } from "react";
 import {Dimensions} from 'react-native';
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from "react-native";
 import Background from "../components/Background";
@@ -6,17 +6,22 @@ import MainBar from "../components/MainBar";
 import Header from "../components/Header";
 import { useNavigation } from "@react-navigation/native";
 import AnimatedCircularProgress from 'rn-conical-gradient-progress';
-import { surMeta } from '../helpers/quran';
+import { surMeta, ayatNumber } from '../helpers/quran';
 import { useTranslation } from "react-i18next";
+import { UserContext } from '../contexts/userContext';
 
 export default function Battery() {
   const width = Dimensions.get('window').width;
-  const level = 3.52; // must be replaced with user level from token, x.y, x means sura . y means % completed in this sura, 0 based
   const sign = useRef('+');
   const horizontalPos = useRef();
   const scrollViewRef = useRef();
   const navigation = useNavigation();
   const { i18n } = useTranslation();
+  const { level } = useContext(UserContext);
+
+  useEffect(() => {
+    console.log('Remove loading screen after .5s');
+  }, [])
   
   return (
     <Background>
@@ -48,8 +53,13 @@ export default function Battery() {
 
             // Calculate completion %
             let fill = 0;
+            let startingAyaFrom = 0;
             if ( i == Math.floor(level) && Math.floor(level) != level ) {
               let levelStr = String(level).split('.')[1];
+              // Calculate startAyaNumber
+              startingAyaFrom = Number(levelStr);
+              // Calculate completion % from number of completed ayats
+              levelStr = ((Number(levelStr)*100) / ayatNumber[i]).toFixed(2);
               if ( levelStr.length == 1 ) {
                 levelStr += '0';
               } else if ( levelStr.length > 2 ) {
@@ -62,7 +72,7 @@ export default function Battery() {
             return (
             <TouchableOpacity
               // we need to prevent the user from memorizing a later sura ( must go in order )
-              onPress={() => navigation.navigate("Sura", { suraIndex: i, startAyaNumber: 1})}
+              onPress={() => navigation.navigate("Sura", { suraIndex: i, startAyaNumber: startingAyaFrom})}
               style={{...styles.sura, 
                 left: left,
               }}

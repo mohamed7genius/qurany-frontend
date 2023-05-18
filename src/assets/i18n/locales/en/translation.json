@@ -41,6 +41,21 @@
         "loading": "Loading .."
     },
     "qari": {
-        "menshawi": "Mohamed Sediq El Menshawi"
+        "menshawi": "Mohamed Seddik Elmenshawy",
+        "abdulBasit": "Abdul Basit Abdul Samad",
+        "husary": "Mahmoud Khalil Al Hussary",
+        "tablaway": "Mohamed Al Tablaway",
+        "dussary": "Yasser Al Dussary"
+    },
+    "settings": {
+        "qariName": "Change Qari",
+        "language": "Change Language"
+    },
+    "languages": {
+        "ar": "Arabic",
+        "en": "English"
+    },
+    "support": {
+        "notAvailable": "Sorry we are not available right now! Send an email to us on support@genius-eg.com"
     }
 }

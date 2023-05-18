@@ -9,8 +9,9 @@ import { StartScreen, LoginScreen, RegisterScreen, ResetPasswordScreen, Settings
         Support, Profile, Scoring, Sura } from "./src/screens";
 import "./src/i18n/i18n"; 
 import { UserProvider } from './src/contexts/userContext';
+import * as SplashScreen from 'expo-splash-screen';
 
-const Stack = createStackNavigator(); 
+const Stack = createStackNavigator();
 
 export default function App() {
 

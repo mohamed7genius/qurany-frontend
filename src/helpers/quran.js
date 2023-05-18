@@ -915,6 +915,10 @@ export const surMeta = [ // from http://api.alquran.cloud/v1/meta
 
 export const qariData = { 
     menshawi: "Menshawi_16kbps",
+    abdulBasit: "Abdul_Basit_Murattal_64kbps",
+    husary: "Husary_64kbps",
+    tablaway: "Mohammad_al_Tablaway_64kbps",
+    dussary: "Yasser_Ad-Dussary_128kbps",
 };
 
 export const ayatNumber = [

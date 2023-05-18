@@ -19,7 +19,7 @@ export default function SuraNav({ ayat, wordPointer, suraIndex, ayaPointer, setA
   const ayaPointerRef = useRef(ayaPointer);
   const URI = useRef();
   const arTrans = JsLingua.gserv('trans', 'ara');
-  const similarityAbove = 15; // in %
+  const similarityAbove = 10; // in %
   const { score, setScore, setLevel, level, qariName } = useContext(UserContext);
   const [isAyaPlaying, setIsAyaPlaying] = useState();
   const [playingAyaSound, setPlayingAyaSound] = useState();
@@ -170,6 +170,7 @@ export default function SuraNav({ ayat, wordPointer, suraIndex, ayaPointer, setA
       setWaitingServerResponse(false);
     } catch ( err ) {
       console.log('error', err);
+      setWaitingServerResponse(false);
     }
   };
 
@@ -177,6 +178,7 @@ export default function SuraNav({ ayat, wordPointer, suraIndex, ayaPointer, setA
     try {
       await Audio.setAudioModeAsync({
         playsInSilentModeIOS: true,
+        allowsRecordingIOS: false,
       });
 
       const sound = new Audio.Sound();

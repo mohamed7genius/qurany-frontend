@@ -81,7 +81,6 @@ const Sura = ({ navigation, ...props}) => {
                   { i == ayaPointer ?
                     aya.split(' ').map((word, wordIndex) => {
                       if ( wordIndex == wrongWordIndex ){
-                        console.log('first', word.split('').length, cleanSuraAyat[ayaPointer].split(' ')[wrongWordIndex].split('').length)
                         if ( word.split('').length < cleanSuraAyat[ayaPointer].split(' ')[wrongWordIndex].split('').length ) {
                           setWrongWordIndex(wrongWordIndex+1);
                           return <Text key={`${surMeta[suraIndex].englishName}_${i}_${wordIndex}`}>{word} </Text>;

@@ -3,7 +3,7 @@ import { TouchableOpacity, StyleSheet, Text, I18nManager } from "react-native";
 import { useTranslation } from "react-i18next";
 import { MaterialIcons } from "@expo/vector-icons";
  export default function LangugeChanger() {
-  const { i18n} = useTranslation();
+  const { i18n, t } = useTranslation();
    return (
     <TouchableOpacity
     
@@ -11,14 +11,15 @@ import { MaterialIcons } from "@expo/vector-icons";
       onPress={() => {
         if (i18n.language == "en") {
           i18n.changeLanguage("ar");
-           } else {
+        } else {
           i18n.changeLanguage("en");
         }
       }}
  
     >
       <MaterialIcons name="language" size={30} color="white" />
-      <Text style={styles.langugeChanger}>{i18n.language == 'ar' ? 'EN' : 'AR'}</Text>
+      {/* TODO: Make it dropdown */}
+      <Text style={styles.langugeChanger}>{i18n.language == 'ar' ? t(`languages.en`) : t(`languages.ar`)}</Text>
     </TouchableOpacity>
   );
 }

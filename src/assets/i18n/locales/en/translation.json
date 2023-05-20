@@ -30,7 +30,8 @@
         "invalidEmailError":"We need a valid email address",
         "invalidPasswordError":"Password must be at least 5 characters long",
         "passwordError":"Password can't be empty",
-        "nameError":"Name can't be empty"
+        "nameError":"Name can't be empty",
+        "somethingWrong": "Something wrong happened, kindly try again later."
     },
     "sura": {
         "listenTo": "Listen to ayat",
@@ -57,5 +58,9 @@
     },
     "support": {
         "notAvailable": "Sorry we are not available right now! Send an email to us on support@genius-eg.com"
+    },
+    "scoring": {
+        "name": "Name",
+        "score": "Hasanaat(Score)"
     }
 }

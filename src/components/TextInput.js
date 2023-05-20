@@ -3,7 +3,7 @@ import { View, StyleSheet, Text } from "react-native";
 import { TextInput as Input } from "react-native-paper";
 import { theme } from "../core/theme";
 import { useTranslation } from "react-i18next";
- 
+
 
 export default function TextInput({
   errorText,
@@ -41,11 +41,13 @@ const styles = StyleSheet.create({
   input: {
     height: 50,
     margin: 10,
-     borderRadius: 10,
+    borderRadius: 10,
     borderColor: "#606060",
     borderStyle: "solid",
     background: "#F0F0F0",
     fontFamily: "regularFont",
+    width: '100%',
+    marginHorizontal: 'auto'
  
 },
   error: {

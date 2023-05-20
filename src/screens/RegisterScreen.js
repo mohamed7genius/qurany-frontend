@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import React, { useState, useContext } from "react";
+import { StyleSheet, View, Text } from "react-native";
 import MainScreenComponent from "../components/MainScreenComponent";
 import { useTranslation } from "react-i18next";
 import Button from "../components/Button";
@@ -8,12 +8,16 @@ import { theme } from "../core/theme";
 import { emailValidator } from "../helpers/emailValidator";
 import { passwordValidator } from "../helpers/passwordValidator";
 import { nameValidator } from "../helpers/nameValidator";
+import { UserContext } from '../contexts/userContext';
+import { BACKEND_USER_URL, API_KEY } from '@env';
 
 export default function RegisterScreen({ navigation }) {
   const { t, i18n } = useTranslation();
   const [name, setName] = useState({ value: "", error: "" });
   const [email, setEmail] = useState({ value: "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });
+  const [errorKey, setErrorKey] = useState();
+  const { setJWT } = useContext(UserContext);
 
   const onSignUpPressed = () => {
     const nameError = nameValidator(name.value);
@@ -25,10 +29,36 @@ export default function RegisterScreen({ navigation }) {
       setPassword({ ...password, error: passwordError });
       return;
     }
-    navigation.reset({
-      index: 0,
-      routes: [{ name: "Battery" }],
+    // Validate with the backend
+    fetch(`${BACKEND_USER_URL}/register`, {
+      method: 'POST',
+      headers: {
+        "api-key": API_KEY,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: name.value,
+        email: email.value,
+        password: password.value,
+      })
+    }).then((res) => res.json()).then((res) => {
+      console.log('res', res);
+      if ( res?.token ) {
+        setJWT(res.token);
+        // Move to main screen
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "Battery" }],
+        });
+      } else {
+        // There's an error with the backend
+        setErrorKey(res?.errorMessage || 'somethingWrong')
+      }
+    }).catch((err) => {
+      console.log('Error from backend', err);
+      setErrorKey(err?.errorMessage || 'somethingWrong')
     });
+
   };
 
   return (
@@ -74,6 +104,7 @@ export default function RegisterScreen({ navigation }) {
           secureTextEntry
         />
       </View>
+      { errorKey && <Text>{t(`errors.${errorKey}`)}</Text> }
       <Button
         iconName="person-add-alt"
         mode="contained"
@@ -85,4 +116,11 @@ export default function RegisterScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  errorText: {
+    color: theme.colors.error,
+    fontFamily: 'regularFont',
+    fontSize: 20,
+    textAlign: "center",
+  },
+});

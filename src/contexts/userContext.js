@@ -6,7 +6,13 @@ const UserProvider = ({ children }) => {
   const [score, setScore] = useState();
   const [level, setLevel] = useState();
   const [qariName, setQariName] = useState();
+  const [jwt, setJWT] = useState();
 
+
+  const setAndStoreJWT = async (token=null) => {
+    setJWT(token);
+    await store('jwt', token);
+  };
 
   const setAndStoreQariName = async (name='menshawi') => {
     setQariName(name);
@@ -44,6 +50,13 @@ const UserProvider = ({ children }) => {
     } else {
       setQariName(localQariName);
     }
+
+    const localJWT = await retrive('jwt');
+    if ( !localQariName ) {
+      setAndStoreJWT(null);
+    } else {
+      setJWT(localJWT);
+    }
   };
 
   useEffect(() => {
@@ -52,7 +65,8 @@ const UserProvider = ({ children }) => {
 
 
   return (
-    <UserContext.Provider value={{score, setScore: setAndStoreScore, level, setLevel: setAndStoreLevel, qariName, setQariName: setAndStoreQariName}}>
+    <UserContext.Provider value={{score, setScore: setAndStoreScore, level, setLevel: setAndStoreLevel,
+     qariName, setQariName: setAndStoreQariName, jwt, setJWT: setAndStoreJWT }}>
         {children}
     </UserContext.Provider>
   );

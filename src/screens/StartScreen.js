@@ -1,12 +1,27 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import MainScreenComponent from "../components/MainScreenComponent";
 import { theme } from "../core/theme";
 import { MaterialIcons } from "@expo/vector-icons";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import Button from "../components/Button";
 import { useTranslation } from "react-i18next";
+import { UserContext } from '../contexts/userContext';
+import LoadingScreen from "../components/LoadingScreen";
+
 export default function StartScreen({ navigation }) {
   const { t, i18n } = useTranslation();
+  const { jwt } = useContext(UserContext);
+
+  useEffect(() => {
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "Battery" }],
+    });
+  }, [jwt]);
+
+  if ( jwt ) {
+    return <LoadingScreen />;
+  }
 
   return (
     <MainScreenComponent>

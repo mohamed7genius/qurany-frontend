@@ -16,7 +16,7 @@
 
     },
     "registerScreen":{
-        "name":"الأسم"
+        "name":"الاسم"
     },
     "resetPasswordScreen":{
         "restoreText":"تعين كلمة مرور جديدة",
@@ -29,7 +29,8 @@
         "invalidEmailError":"يرجي أدخال بريد إلكتروني صالح.",
         "invalidPasswordError":"يجب أن تتكون كلمة المرور من 5 أحرف على الأقل",
         "passwordError": "يرجي أدخال كلمة مرور ",
-        "nameError":"يرجي أدخال أسم مستخدم "
+        "nameError":"يرجي أدخال أسم مستخدم ",
+        "somethingWrong": "حدث شئ خاطئ, برجاء المحاولة مرة اخري لاحقا."
     },
     "sura": {
         "listenTo": "استمع إلي الايات",
@@ -56,5 +57,9 @@
     },
     "support": {
         "notAvailable": "نأسف لسنا متاحين الآن! أرسل بريدًا إلكترونيًا إلينا على support@genius-eg.com"
+    },
+    "scoring": {
+        "name": "الاسم",
+        "score": "الحسنات"
     }
 }

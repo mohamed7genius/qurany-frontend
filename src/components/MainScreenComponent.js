@@ -29,7 +29,7 @@ export default function MainScreenComponent({ goBack, children }) {
           />
           <Text style={styles.qurany}>{t(`main.appName`)}</Text>
         </View>
-        <KeyboardAvoidingView style={styles.keyBoardContainer}>
+        <KeyboardAvoidingView style={styles.keyBoardContainer} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
           <View style={styles.childContainer}>{children}</View>
         </KeyboardAvoidingView>
       </Background>
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   childContainer: {
     justifyContent: "center",
     paddingTop: "10%",
-    marginTop: -50,
+    marginTop: "-30%",
     paddingHorizontal: "10%",
     width: "100%",
   },

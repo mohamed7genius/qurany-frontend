@@ -10,13 +10,15 @@ import { useTranslation } from "react-i18next";
 import { passwordValidator } from "../helpers/passwordValidator";
 import { UserContext } from '../contexts/userContext';
 import { BACKEND_USER_URL, API_KEY } from '@env';
+import LoadingScreen from "../components/LoadingScreen";
 
 export default function LoginScreen({ navigation }) {
   const { t, i18n } = useTranslation();
   const [email, setEmail] = useState({ value: "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });
   const [errorKey, setErrorKey] = useState();
-  const { setJWT } = useContext(UserContext);
+  const [loading, setLoading] = useState();
+  const { setJWT, setName: setCurrentName, setEmail: setCurrentEmail } = useContext(UserContext);
   const loginURL = `${BACKEND_USER_URL}/login`;
 
   const onLoginPressed = () => {
@@ -28,6 +30,7 @@ export default function LoginScreen({ navigation }) {
       return;
     }
 
+    setLoading(true);
     // Validate the login with the backend
     fetch(loginURL, {
       method: 'POST',
@@ -43,6 +46,8 @@ export default function LoginScreen({ navigation }) {
       console.log('res', res);
       if ( res?.token ) {
         setJWT(res.token);
+        setCurrentName(res.name);
+        setCurrentEmail(res.email);
         // Move to main screen
         navigation.reset({
           index: 0,
@@ -56,8 +61,12 @@ export default function LoginScreen({ navigation }) {
       console.log('Error from backend', err);
       setErrorKey(err?.errorMessage || 'somethingWrong')
     });
-    
+    setLoading(false);
   };
+
+  if ( loading ) {
+    return <LoadingScreen />;
+  }
 
   return (
     <MainScreenComponent goBack={() => navigation.goBack()}>

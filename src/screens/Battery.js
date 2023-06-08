@@ -1,6 +1,6 @@
 import { useEffect, useRef, useContext } from "react";
 import {Dimensions} from 'react-native';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, FlatList, TouchableOpacity } from "react-native";
 import Background from "../components/Background";
 import MainBar from "../components/MainBar";
 import Header from "../components/Header";
@@ -26,8 +26,11 @@ export default function Battery() {
   return (
     <Background>
       <Header />
-        { width && surMeta && <ScrollView contentContainerStyle={styles.scrollViewer} ref={(e) => scrollViewRef.current = e}>
-          { surMeta.map((sura, i) => {
+        { width && surMeta && <FlatList
+          data={surMeta}
+          renderItem={(e) => {
+            const i = e.index;
+            const sura = e.item;
             let left;
             if ( i === 0 ) {
               left = (width / 2) - 60;
@@ -70,38 +73,40 @@ export default function Battery() {
               fill = 100;
             } // else fill = 0 default
             return (
-            <TouchableOpacity
-              // we need to prevent the user from memorizing a later sura ( must go in order )
-              onPress={() => navigation.navigate("Sura", { suraIndex: i, startAyaNumber: startingAyaFrom})}
-              style={{...styles.sura, 
-                left: left,
-              }}
-              key={`dashboard_${sura.englishName}`}
-            >
-            <AnimatedCircularProgress
-            size={120}
-            width={5}
-            fill={ fill }
-            prefill={0}
-            beginColor="#1C8DCD"
-            endColor="#009E5A"
-            segments={100}
-            backgroundColor="#ddd"
-            linecap="round"
-            style={styles.progressCircle}
-          >
-            {fill => (
-              <View style={styles.suraTextContainer}>
-                <Text style={styles.precentageText}>{fill.toFixed(0)}%</Text>
-                { i18n.language != 'ar' && <Text style={styles.suraName}>{sura.englishName}</Text>}
-                <Text style={styles.suraName}>{sura.name}</Text>
-              </View>
-            )}
-          </AnimatedCircularProgress>
+              <TouchableOpacity
+                // we need to prevent the user from memorizing a later sura ( must go in order )
+                onPress={() => navigation.navigate("Sura", { suraIndex: i, startAyaNumber: startingAyaFrom})}
+                style={{...styles.sura, 
+                  left: left,
+                }}
+                key={`dashboard_${sura.englishName}`}
+              >
+                <AnimatedCircularProgress
+                size={120}
+                width={5}
+                fill={ fill }
+                prefill={0}
+                beginColor="#1C8DCD"
+                endColor="#009E5A"
+                segments={100}
+                backgroundColor="#ddd"
+                linecap="round"
+                style={styles.progressCircle}
+              >
+                {fill => (
+                  <View style={styles.suraTextContainer}>
+                    <Text style={styles.precentageText}>{fill.toFixed(0)}%</Text>
+                    { i18n.language != 'ar' && <Text style={styles.suraName}>{sura.englishName}</Text>}
+                    <Text style={styles.suraName}>{sura.name}</Text>
+                  </View>
+                )}
+              </AnimatedCircularProgress>
             </TouchableOpacity>
             );
-          })}
-        </ScrollView> }
+          }}
+          keyExtractor={(item, i) => `score_${item.name}_${i}`}
+          style={{ flex: 1, display: 'flex'}}
+        /> }
         <MainBar />
       </Background>
   );

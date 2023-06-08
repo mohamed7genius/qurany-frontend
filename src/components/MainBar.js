@@ -10,12 +10,7 @@ export default function MainBar() {
     <SafeAreaView style={styles.main}>
       <View style={styles.container}>
         <TouchableOpacity onPress={() => navigation.navigate("Support")}>
-          <MaterialIcons
-            style={styles.support}
-            name="support"
-            size={24}
-            color="white"
-          />
+          <MaterialIcons name="support" size={24} color="white" />
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => navigation.navigate("Settings")}>
@@ -24,6 +19,10 @@ export default function MainBar() {
 
         <TouchableOpacity onPress={() => navigation.navigate("Battery")}>
           <MaterialIcons name="battery-std" size={32} color="white" />
+        </TouchableOpacity>
+        
+        <TouchableOpacity onPress={() => navigation.navigate("Memorize")}>
+          <MaterialIcons name="repeat" size={32} color="white" />
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => navigation.navigate("Scoring")}>

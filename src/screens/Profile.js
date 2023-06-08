@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { StyleSheet, View } from "react-native";
  import { useTranslation } from "react-i18next";
 import Button from "../components/Button";
@@ -9,13 +9,18 @@ import Header from "../components/Header";
  import { emailValidator } from "../helpers/emailValidator";
 import { passwordValidator } from "../helpers/passwordValidator";
 import { nameValidator } from "../helpers/nameValidator";
+import { UserContext } from '../contexts/userContext';
+import LoadingScreen from "../components/LoadingScreen";
 
 export default function Profile({ navigation }) {
-  const { t, i18n } = useTranslation();
-  const [name, setName] = useState({ value: "", error: "" });
-  const [email, setEmail] = useState({ value: "", error: "" });
+  const { t } = useTranslation();
+  const { loggingOut, name: currentName, email: currentEmail, jwt } = useContext(UserContext);
+  const [name, setName] = useState({ value: currentName || "", error: "" });
+  const [email, setEmail] = useState({ value: currentEmail || "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });
-  const onSignUpPressed = () => {
+  const [loading, setLoading] = useState();
+
+  const updateUserDetails = () => {
     const nameError = nameValidator(name.value);
     const emailError = emailValidator(email.value);
     const passwordError = passwordValidator(password.value);
@@ -25,11 +30,50 @@ export default function Profile({ navigation }) {
       setPassword({ ...password, error: passwordError });
       return;
     }
+    setLoading(true);
+    // To simulate fetch TODO: Add fetch
+    setTimeout(() => {
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "Battery" }],
+      });
+    }, 5000);
+  };
+
+  const registerUser = () => {
+    const nameError = nameValidator(name.value);
+    const emailError = emailValidator(email.value);
+    const passwordError = passwordValidator(password.value);
+    if (emailError || passwordError || nameError) {
+      setName({ ...name, error: nameError });
+      setEmail({ ...email, error: emailError });
+      setPassword({ ...password, error: passwordError });
+      return;
+    }
+    setLoading(true);
+    // To simulate fetch TODO: Add fetch
+    setTimeout(() => {
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "Battery" }],
+      });
+    }, 5000);
+  };
+
+  const logOut = () => {
+    setLoading(true);
+    // Delete JWT
+    loggingOut();
+    // Redirect
     navigation.reset({
       index: 0,
-      routes: [{ name: "Battery" }],
+      routes: [{ name: "StartScreen" }],
     });
   };
+
+  if ( loading ) {
+    return <LoadingScreen />;
+  }
 
   return (
     <Background>
@@ -74,13 +118,20 @@ export default function Profile({ navigation }) {
           errorText={t(password.error)}
           secureTextEntry
         />
-         <Button
-        iconName="person-add-alt"
-        mode="contained"
-        onPress={onSignUpPressed}
-      >
-        {t(`updateScreen.updateButton`)}
-      </Button>
+        <Button
+          iconName="person-add-alt"
+          mode="contained"
+          onPress={jwt == 'guest' ? registerUser : updateUserDetails}
+        >
+          {t( jwt == 'guest' ? `startScreen.signUp` : `updateScreen.updateButton`)}
+        </Button>
+        <Button
+          iconName="logout"
+          mode="contained"
+          onPress={logOut}
+        >
+          {t(`updateScreen.logout`)}
+        </Button>
       </View>
      
       <MainBar/>
@@ -93,6 +144,5 @@ const styles = StyleSheet.create({
     flex:1,
     justifyContent:"center",
     alignSelf:"center"
-
-  }
+  },
 });

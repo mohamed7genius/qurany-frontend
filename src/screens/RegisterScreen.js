@@ -10,6 +10,7 @@ import { passwordValidator } from "../helpers/passwordValidator";
 import { nameValidator } from "../helpers/nameValidator";
 import { UserContext } from '../contexts/userContext';
 import { BACKEND_USER_URL, API_KEY } from '@env';
+import LoadingScreen from "../components/LoadingScreen";
 
 export default function RegisterScreen({ navigation }) {
   const { t, i18n } = useTranslation();
@@ -17,7 +18,8 @@ export default function RegisterScreen({ navigation }) {
   const [email, setEmail] = useState({ value: "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });
   const [errorKey, setErrorKey] = useState();
-  const { setJWT } = useContext(UserContext);
+  const { setJWT, setName: setCurrentName, setEmail: setCurrentEmail } = useContext(UserContext);
+  const [loading, setLoading] = useState();
 
   const onSignUpPressed = () => {
     const nameError = nameValidator(name.value);
@@ -29,6 +31,7 @@ export default function RegisterScreen({ navigation }) {
       setPassword({ ...password, error: passwordError });
       return;
     }
+    setLoading(true);
     // Validate with the backend
     fetch(`${BACKEND_USER_URL}/register`, {
       method: 'POST',
@@ -45,6 +48,8 @@ export default function RegisterScreen({ navigation }) {
       console.log('res', res);
       if ( res?.token ) {
         setJWT(res.token);
+        setCurrentName(res.name);
+        setCurrentEmail(res.email);
         // Move to main screen
         navigation.reset({
           index: 0,
@@ -58,8 +63,12 @@ export default function RegisterScreen({ navigation }) {
       console.log('Error from backend', err);
       setErrorKey(err?.errorMessage || 'somethingWrong')
     });
-
+    setLoading(false);
   };
+
+  if ( loading ) {
+    return <LoadingScreen />;
+  }
 
   return (
     <MainScreenComponent goBack={navigation.goBack}>

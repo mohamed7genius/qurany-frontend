@@ -7,6 +7,8 @@ const UserProvider = ({ children }) => {
   const [level, setLevel] = useState();
   const [qariName, setQariName] = useState();
   const [jwt, setJWT] = useState();
+  const [email, setEmail] = useState();
+  const [name, setName] = useState();
 
 
   const setAndStoreJWT = async (token=null) => {
@@ -27,6 +29,16 @@ const UserProvider = ({ children }) => {
   const setAndStoreScore = async (newScore=0) => {
     setScore(newScore);
     await store('score', newScore);
+  };
+  
+  const setAndStoreEmail = async (newEmail=null) => {
+    setEmail(newEmail);
+    await store('email', newEmail);
+  };
+  
+  const setAndStoreName = async (newName=null) => {
+    setName(newName);
+    await store('name', newName);
   };
 
   const init = async () => {
@@ -57,7 +69,31 @@ const UserProvider = ({ children }) => {
     } else {
       setJWT(localJWT);
     }
+
+    const localName = await retrive('name');
+    if ( !localName ) {
+      setAndStoreName(null);
+    } else {
+      setName(localName);
+    }
+
+    const localEmail = await retrive('email');
+    if ( !localEmail ) {
+      setAndStoreEmail(null);
+    } else {
+      setEmail(localEmail);
+    }
   };
+
+  const loggingOut = async () =>  {
+    // Reset all localStorage
+    setAndStoreJWT();
+    setAndStoreLevel();
+    setAndStoreScore();
+    setAndStoreQariName();
+    setAndStoreEmail();
+    setAndStoreName();
+  }
 
   useEffect(() => {
     init();
@@ -65,8 +101,9 @@ const UserProvider = ({ children }) => {
 
 
   return (
-    <UserContext.Provider value={{score, setScore: setAndStoreScore, level, setLevel: setAndStoreLevel,
-     qariName, setQariName: setAndStoreQariName, jwt, setJWT: setAndStoreJWT }}>
+    <UserContext.Provider value={{ score, setScore: setAndStoreScore, level, setLevel: setAndStoreLevel,
+     qariName, setQariName: setAndStoreQariName, jwt, setJWT: setAndStoreJWT, loggingOut, name, email,
+     setEmail: setAndStoreEmail, setName: setAndStoreName }}>
         {children}
     </UserContext.Provider>
   );

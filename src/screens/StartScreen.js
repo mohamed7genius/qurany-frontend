@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useLayoutEffect, useState } from "react";
 import MainScreenComponent from "../components/MainScreenComponent";
 import { theme } from "../core/theme";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -10,16 +10,22 @@ import LoadingScreen from "../components/LoadingScreen";
 
 export default function StartScreen({ navigation }) {
   const { t, i18n } = useTranslation();
-  const { jwt } = useContext(UserContext);
-
-  useEffect(() => {
-    navigation.reset({
-      index: 0,
-      routes: [{ name: "Battery" }],
-    });
+  const { jwt, setJWT } = useContext(UserContext);
+  const [loading, setLoading] = useState(true);
+  
+  useLayoutEffect(() => {
+    if ( jwt ) {
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "Battery" }],
+      });
+    } 
+    if ( jwt == null && typeof(jwt) != 'undefined' ) {
+      setLoading(false);
+    }
   }, [jwt]);
-
-  if ( jwt ) {
+  
+  if ( loading ) {
     return <LoadingScreen />;
   }
 
@@ -43,6 +49,8 @@ export default function StartScreen({ navigation }) {
           style={i18n.dir()==="rtl" && Platform.OS === "android" ? styles.continueButtonContainerRTL : styles.continueButtonContainer}      
           onPress={() => {
             console.log('set loading screen!');
+            setLoading(true);
+            setJWT('guest');
             navigation.reset({
               index: 0,
               routes: [{ name: "Battery" }],

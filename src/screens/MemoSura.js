@@ -6,12 +6,10 @@ import SuraNav from "../components/SuraNav";
 import { toArabicNumber } from '../helpers/format';
 import { useTranslation } from "react-i18next";
 
-const Sura = ({ navigation, ...props}) => {
+const MemoSura = ({ navigation, ...props}) => {
   const {suraIndex, startAyaNumber} = props.route.params;
   const [suraAyat, setSuraAyat] = useState();
   const [cleanSuraAyat, setCleanSuraAyat] = useState();
-  const [scrollViewer, setScrollViewer] = useState();
-  const [ayatCordinates, setAyatCordinates] = useState([]);
   const wordPointer = useRef(0);
   const [ayaPointer, setAyaPointer] = useState(startAyaNumber || 0);
   const [wrongWordIndex, setWrongWordIndex] = useState();
@@ -28,23 +26,6 @@ const Sura = ({ navigation, ...props}) => {
     setCleanSuraAyat(cleanAyat);
   }, []);
 
-  /* useEffect(() => {
-    scrollTo(ayaPointer);
-  }, [scrollViewer, suraAyat]);
-
-  const scrollTo = (index) => {
-    console.log('caled', index, ayatCordinates);
-    if ( index < 1 || !scrollViewer ) {
-      console.log('return');
-      return
-    }
-    scrollViewer.scrollTo({
-      x: 0,
-      y: ayatCordinates[index - 1],
-      animated: true,
-    });
-  }; */
-
   return (
     <SafeAreaView style={styles.container}>
       <Header goBack={() => navigation.goBack()} />
@@ -55,15 +36,14 @@ const Sura = ({ navigation, ...props}) => {
       </ImageBackground>
       <ScrollView
         contentContainerStyle={styles.scrollViewer}
-        ref={(ref) => {
-          setScrollViewer(ref);
-        }}
       >
         { suraIndex > 0 && <Text style={styles.aya}>{ayatText[0]}</Text>}
         {suraAyat &&
           suraAyat.map((aya, i) => {
             return (
-              <View key={`${surMeta[suraIndex].englishName}_${i}`} >
+              <View
+                key={`${surMeta[suraIndex].englishName}_${i}`}
+              >
                 <Text
                   style={i == ayaPointer ? [styles.aya, styles.currentAya] : styles.aya }
                 >
@@ -76,9 +56,9 @@ const Sura = ({ navigation, ...props}) => {
                         }
                         return <Text key={`${surMeta[suraIndex].englishName}_${i}_${wordIndex}`} style={styles.wrongWord}>{word} </Text>;
                       }
-                      return <Text key={`${surMeta[suraIndex].englishName}_${i}_${wordIndex}`}>{word} </Text>;
+                      return <Text style={wordPointer.current <= wordIndex ? styles.hiddenAya : {}} key={`${surMeta[suraIndex].englishName}_${i}_${wordIndex}`}>{word} </Text>;
                     })
-                  : aya }
+                  : i > ayaPointer ? <Text style={styles.hiddenAya}>{aya}</Text> : aya }
                   <ImageBackground
                     source={require("../assets/images/ayah-end.png")}
                     style={styles.background}
@@ -97,6 +77,7 @@ const Sura = ({ navigation, ...props}) => {
         ayaPointer={ayaPointer}
         setAyaPointer={setAyaPointer}
         setWrongWordIndex={setWrongWordIndex}
+        allowListen={false}
       />
     </SafeAreaView>
   );
@@ -124,11 +105,13 @@ const styles = StyleSheet.create({
     fontFamily: "quranFont",
     paddingHorizontal: 10,
     textAlign: "center",
-    display: 'inline',
   },
   currentAya: {
-    color: '#656D77',
-    textDecorationLine: 'underline'
+    textDecorationLine: 'underline',
+  },
+  hiddenAya: {
+    color: '#ddd',
+    backgroundColor: '#ddd',
   },
   wrongWord: {
     color: '#C0392B',
@@ -147,4 +130,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Sura;
+export default MemoSura;

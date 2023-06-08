@@ -17,14 +17,15 @@
     "registerScreen":{
         "name":"الاسم"
     },
-    "SupportScreen": {
+    "supportScreen": {
         "feedback": "ضع رأيك هنا",
         "feedbackTitle": "يهُمنا أن نعرف رأيك",
         "feedbackLabel": "رأيك:",
         "sendFeedback": "ارسل رأيك"
     },
     "updateScreen": {
-        "updateButton": "تحديث البيانات"
+        "updateButton": "تحديث البيانات",
+        "logout": "تسجيل الخروج"
     },
     "resetPasswordScreen": {
         "restoreText": "تعين كلمة مرور جديدة",
@@ -38,7 +39,8 @@
         "invalidPasswordError": "يجب أن تتكون كلمة المرور من 5 أحرف على الأقل",
         "passwordError": "يرجي أدخال كلمة مرور ",
         "nameError":"يرجي أدخال أسم مستخدم ",
-        "somethingWrong": "حدث شئ خاطئ, برجاء المحاولة مرة اخري لاحقا."
+        "somethingWrong": "حدث شئ خاطئ, برجاء المحاولة مرة اخري لاحقا.",
+        "guest": "من فضلك اذهب الي صفحة حسابك لتقوم بالتسجيل, حتي تستطيع رؤية نقاط الاخريين!"
     },
     "sura": {
         "listenTo": "استمع إلي الايات",

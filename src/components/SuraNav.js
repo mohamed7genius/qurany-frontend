@@ -9,10 +9,10 @@ import { UserContext } from '../contexts/userContext';
 import { useTranslation } from "react-i18next";
 import { qariData } from "../helpers/quran";
 
-export default function SuraNav({ ayat, wordPointer, suraIndex, ayaPointer, setAyaPointer, setWrongWordIndex }) {
+export default function SuraNav({ ayat, wordPointer, suraIndex, ayaPointer, setAyaPointer, setWrongWordIndex, allowListen=true }) {
   const { t } = useTranslation();
   const [isRecording, setIsRecording] = useState();
-  const [waitingServerResponse, setWaitingServerResponse] = useState();
+  const [waitingServerResponse, setWaitingServerResponse] = useState(false);
   const [responseText, setResponseText] = useState();
   const prevDuration = useRef();
   const recordingState = useRef();
@@ -92,7 +92,9 @@ export default function SuraNav({ ayat, wordPointer, suraIndex, ayaPointer, setA
     }
 
     // Increase score
-    setScore(Number(score)+(Number(wordChars.length)*10) )
+    if ( similarityRate >= similarityAbove ) {
+      setScore(Number(score)+(Number(wordChars.length)*10) )
+    }
 
     console.log('similarityRate', similarityRate);
     return similarityRate >= similarityAbove;
@@ -115,11 +117,12 @@ export default function SuraNav({ ayat, wordPointer, suraIndex, ayaPointer, setA
       });
       
       const jsonRes = JSON.parse(response.body);
-      setResponseText(jsonRes.text);
-      if ( jsonRes.text ) {
+      const jsonResText = typeof(jsonRes.text) == 'string' ? jsonRes.text : jsonRes.text?.text;
+      setResponseText(jsonResText);
+      if ( jsonResText ) {
 
         let currentAyat = ayat[ayaPointer].split(' ');
-        const currentResponse = jsonRes.text.split(' ');
+        const currentResponse = jsonResText.split(' ');
         
         let prevAyaPointer = ayaPointerRef.current;
         for (let i=0;i<currentResponse.length;i++){
@@ -144,7 +147,11 @@ export default function SuraNav({ ayat, wordPointer, suraIndex, ayaPointer, setA
           // end of sura
           // Increase Level
           setAyaPointer(0);
-          if ( level < suraIndex + 1 ) {
+          ayaPointerRef.current = 0;
+          setWaitingServerResponse(false);
+          if ( !allowListen ) {
+            // TODO: Display modal for congrat for memo this sura and to go back
+          } else if ( level < suraIndex + 1 ) {
             setLevel(Number(suraIndex+1));
             // TODO: Display a modal for congrat and to move to next sura or repeat
           } else {
@@ -154,10 +161,10 @@ export default function SuraNav({ ayat, wordPointer, suraIndex, ayaPointer, setA
           return;
         } else if ( ayaPointerRef.current == prevAyaPointer ) {
           // report wrong word
-          // TODO: we can add a flag to prevent make the next word as an error
+          // TODO: we can add a flag to prevent make the next word as an error if the user stops in the middle
           setWrongWordIndex(wordPointer.current);
           console.log('wrong word ', wordPointer.current);
-        } else if ( level < suraIndex + 1 ) {
+        } else if ( level < suraIndex + 1 && allowListen ) {
           // Add completed ayats to level %
           const completedAyatLength = String(ayaPointerRef.current).split('').length;
           let newLevel = completedAyatLength >= 3 ? ayaPointerRef.current : completedAyatLength == 2 ? `0${ayaPointerRef.current}` : `00${ayaPointerRef.current}`;
@@ -227,15 +234,15 @@ export default function SuraNav({ ayat, wordPointer, suraIndex, ayaPointer, setA
         <Text style={styles.text}>{t( isRecording ? `sura.stopRec` : waitingServerResponse ? `sura.loadingResponse` : `sura.startRec`)}</Text>
       </TouchableOpacity>
       <View style={styles.bigContainer}>
-        <Text style={styles.text}>{waitingServerResponse ? t('sura.loading') : responseText}</Text>
+        <Text style={styles.text}>{waitingServerResponse ? t('sura.loading') : ''/*responseText*/}</Text>
       </View>
-      <TouchableOpacity
+      {allowListen && <TouchableOpacity
         style={styles.smallContainer}
         onPress={isAyaPlaying ? stopAya : playAya }
       >
         <MaterialIcons name={isAyaPlaying ? "stop" : "play-circle-filled"} size={30} color="white" />
         <Text style={styles.text}>{t( isAyaPlaying ? `sura.stop` : `sura.listenTo`)}</Text>
-      </TouchableOpacity>
+      </TouchableOpacity>}
     </View>
   );
 }

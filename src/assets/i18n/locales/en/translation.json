@@ -17,7 +17,7 @@
     "registerScreen": {
         "name": "Name"
     },
-    "SupportScreen": {
+    "supportScreen": {
         "feedback": "Enter your feedback here",
         "feedbackTitle": "We care about your Feedback",
         "feedbackLabel": "Your Feedback :",
@@ -29,7 +29,8 @@
         "invalidPasswordError":"Password must be at least 5 characters long",
         "passwordError":"Password can't be empty",
         "nameError":"Name can't be empty",
-        "somethingWrong": "Something wrong happened, kindly try again later."
+        "somethingWrong": "Something wrong happened, kindly try again later.",
+        "guest": "Kindly go to profile page to sign up, so you can see other people scores!"
     },
     "resetPasswordScreen": {
         "restoreText": "Restore Password",
@@ -38,7 +39,8 @@
         "sentEmail": "You will receive email with password reset link"
     },
     "updateScreen": {
-        "updateButton": "Update Profile"
+        "updateButton": "Update Profile",
+        "logout": "Logout"
     },
     "sura": {
         "listenTo": "Listen to ayat",

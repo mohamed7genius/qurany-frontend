@@ -20,11 +20,11 @@ export default function Support() {
     <Background>
       <Header />
       <View style={styles.container}>
-      <Text style={styles.title}>{t(`SupportScreen.feedbackTitle`)}
+      <Text style={styles.title}>{t(`supportScreen.feedbackTitle`)}
       </Text>
-      <Text style={styles.label}>{t(`SupportScreen.feedbackLabel`)}</Text>
+      <Text style={styles.label}>{t(`supportScreen.feedbackLabel`)}</Text>
       <TextInput
-        placeholder={t(`SupportScreen.feedback`)}
+        placeholder={t(`supportScreen.feedback`)}
         style={styles.input}
         multiline
         numberOfLines={4}
@@ -35,7 +35,7 @@ export default function Support() {
          mode="contained"
         onPress={handleSubmit}
       >
-        {t(`SupportScreen.sendFeedback`)}
+        {t(`supportScreen.sendFeedback`)}
       </Button>
       </View>
       <MainBar />

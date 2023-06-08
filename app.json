@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Qurany",
-    "slug": "An app for Muslims to recite Quran",
+    "slug": "An_app_for_Muslims_to_recite_and_memorize_Quran",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/app-icon.png",

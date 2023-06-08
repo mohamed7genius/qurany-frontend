@@ -124,7 +124,6 @@ const styles = StyleSheet.create({
     fontFamily: "quranFont",
     paddingHorizontal: 10,
     textAlign: "center",
-    display: 'inline',
   },
   currentAya: {
     color: '#656D77',

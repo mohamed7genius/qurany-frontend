@@ -1,7 +1,8 @@
 {
   "expo": {
     "name": "Qurany",
-    "slug": "An_app_for_Muslims_to_recite_and_memorize_Quran",
+    "slug": "qurany",
+    "description": "An app for Muslims to recite and memorize Quran",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/app-icon.png",
@@ -33,16 +34,23 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mohamed7genius.qurany"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.mohamed7genius.qurany"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "fa55a47d-644a-47a9-a614-91cd8a91f4df"
+      }
     }
   }
 }

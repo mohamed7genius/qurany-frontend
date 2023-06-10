@@ -63,27 +63,30 @@ const Sura = ({ navigation, ...props}) => {
         {suraAyat &&
           suraAyat.map((aya, i) => {
             return (
-              <View key={`${surMeta[suraIndex].englishName}_${i}`} >
-                <Text
-                  style={i == ayaPointer ? [styles.aya, styles.currentAya] : styles.aya }
-                >
-                  { i == ayaPointer ?
-                    aya.split(' ').map((word, wordIndex) => {
-                      if ( wordIndex == wrongWordIndex ){
-                        if ( word.split('').length < cleanSuraAyat[ayaPointer].split(' ')[wrongWordIndex].split('').length ) {
-                          setWrongWordIndex(wrongWordIndex+1);
-                          return <Text key={`${surMeta[suraIndex].englishName}_${i}_${wordIndex}`}>{word} </Text>;
+              <View key={`${surMeta[suraIndex].englishName}_${i}`} style={styles.ayaViewContainer}>
+                <Text>
+                  <Text
+                    style={i == ayaPointer ? [styles.aya, styles.currentAya] : styles.aya }
+                  >
+                    { i == ayaPointer ?
+                      aya.split(' ').map((word, wordIndex) => {
+                        if ( wordIndex == wrongWordIndex ){
+                          if ( word.split('').length < cleanSuraAyat[ayaPointer].split(' ')[wrongWordIndex].split('').length ) {
+                            setWrongWordIndex(wrongWordIndex+1);
+                            return <Text key={`${surMeta[suraIndex].englishName}_${i}_${wordIndex}`}>{word} </Text>;
+                          }
+                          return <Text key={`${surMeta[suraIndex].englishName}_${i}_${wordIndex}`} style={styles.wrongWord}>{word} </Text>;
                         }
-                        return <Text key={`${surMeta[suraIndex].englishName}_${i}_${wordIndex}`} style={styles.wrongWord}>{word} </Text>;
-                      }
-                      return <Text key={`${surMeta[suraIndex].englishName}_${i}_${wordIndex}`}>{word} </Text>;
-                    })
-                  : aya }
+                        return <Text key={`${surMeta[suraIndex].englishName}_${i}_${wordIndex}`}>{word} </Text>;
+                      })
+                    : <Text>{aya} </Text> }
+                  </Text>
                   <ImageBackground
                     source={require("../assets/images/ayah-end.png")}
-                    style={styles.background}
+                    style={styles.ayaEndBackground}
+                    imageStyle={Platform.OS === "android" ? { marginTop: 7 } : {}}
                   >
-                    <Text style={styles.ayaEnd}>{i18n.language == 'ar' ? toArabicNumber(i + 1) : i+1}</Text>
+                    <Text style={Platform.OS === "android" ? styles.ayaEndAndroid : styles.ayaEnd}>{i18n.language == 'ar' ? toArabicNumber(i + 1) : i+1}</Text>
                   </ImageBackground>
                 </Text>
               </View>
@@ -115,6 +118,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
     padding: 5,
   },
+  ayaViewContainer: {
+    alignItems: 'center',
+    padding: 10,
+  },
   aya: {
     fontSize: 20,
     backgroundColor: "#fff",
@@ -134,12 +141,15 @@ const styles = StyleSheet.create({
   },
   ayaEnd: {
     fontFamily: 'regularFont',
+    marginTop: 5,
   },
-  background: {
+  ayaEndAndroid: {
+    fontFamily: 'regularFont',
+    marginTop: 14,
+  },
+  ayaEndBackground: {
     width: 30,
-    height:30,
-    paddingTop: 5,
-    paddingLeft: 1,
+    height: 30,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',

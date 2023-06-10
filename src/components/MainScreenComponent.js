@@ -26,6 +26,7 @@ export default function MainScreenComponent({ goBack, children }) {
           <Image
             style={styles.logo}
             source={require("../assets/images/logo.png")}
+            resizeMode="contain"
           />
           <Text style={styles.qurany}>{t(`main.appName`)}</Text>
         </View>
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     width: 145,
-    height: 71,
+    height: 145,
     flexDirection: "row",
   },
   qurany: {

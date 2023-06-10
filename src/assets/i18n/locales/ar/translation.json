@@ -21,7 +21,8 @@
         "feedback": "ضع رأيك هنا",
         "feedbackTitle": "يهُمنا أن نعرف رأيك",
         "feedbackLabel": "رأيك:",
-        "sendFeedback": "ارسل رأيك"
+        "sendFeedback": "ارسل رأيك",
+        "successMessage": "شكرا علي مراسلتنا, سوف نرد قريبا ان شاء الله"
     },
     "updateScreen": {
         "updateButton": "تحديث البيانات",

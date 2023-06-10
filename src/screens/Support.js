@@ -1,20 +1,55 @@
-import React,{useState} from "react";
+import React,{useState, useContext} from "react";
 import { StyleSheet, Text, View ,TextInput} from "react-native";
 import Background from "../components/Background";
 import MainBar from "../components/MainBar";
 import Header from "../components/Header";
 import Button from "../components/Button";
-
+import { UserContext } from '../contexts/userContext';
+import LoadingScreen from "../components/LoadingScreen";
+import { BACKEND_USER_URL, API_KEY } from '@env';
+import { theme } from "../core/theme";
 import { useTranslation } from "react-i18next";
 
 export default function Support() {
   const { t, i18n } = useTranslation();
   const [feedback, setFeedback] = useState("");
+  const [errorKey, setErrorKey] = useState("");
+  const [loading, setLoading] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const { jwt, email } = useContext(UserContext);
+  const url = `${BACKEND_USER_URL}/send-email`;
 
   const handleSubmit = () => {
-     console.log("Feedback submitted:", feedback);
-     setFeedback("");
+     fetch(url, {
+      method: 'POST',
+      headers: {
+        "api-key": API_KEY,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        message: feedback,
+        token: jwt
+      })
+    }).then((res) => res.json()).then((res) => {
+      if ( res?.errorMessage ) {
+        // There's an error with the backend
+        setErrorKey(res?.errorMessage || 'somethingWrong')
+      } else {
+        setLoading(false);
+        setSuccessMessage(true);
+        setFeedback("");
+      }
+    }).catch((err) => {
+      console.log('Error from backend', err);
+      setErrorKey(err?.errorMessage || 'somethingWrong')
+    });
+    setLoading(false);
   };
+
+  if ( loading ) {
+    return <LoadingScreen />;
+  }
 
   return (
     <Background>
@@ -37,6 +72,8 @@ export default function Support() {
       >
         {t(`supportScreen.sendFeedback`)}
       </Button>
+      {errorKey && <Text style={styles.errorText}>{t(`errors.${errorKey}`)}</Text>}
+      {successMessage && <Text style={styles.successMessage}>{t(`supportScreen.successMessage`)}</Text>}
       </View>
       <MainBar />
     </Background>
@@ -69,4 +106,15 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     textAlignVertical: "top",
   },
+  errorText: {
+    color: theme.colors.error,
+    fontFamily: 'regularFont',
+    fontSize: 20,
+    textAlign: "center",
+  },
+  successMessage: {
+    fontFamily: 'regularFont',
+    fontSize: 20,
+    textAlign: "center",
+  }
 });

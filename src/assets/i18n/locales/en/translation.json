@@ -21,7 +21,8 @@
         "feedback": "Enter your feedback here",
         "feedbackTitle": "We care about your Feedback",
         "feedbackLabel": "Your Feedback :",
-        "sendFeedback": "Send Feedback"
+        "sendFeedback": "Send Feedback",
+        "successMessage": "Thanks for contacting us, we will reply soon inshaAllah"
     },
     "errors": {
         "emailError":"Email can't be empty",

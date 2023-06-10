@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
  import { useTranslation } from "react-i18next";
 import Button from "../components/Button";
 import TextInput from "../components/TextInput";
@@ -11,14 +11,18 @@ import { passwordValidator } from "../helpers/passwordValidator";
 import { nameValidator } from "../helpers/nameValidator";
 import { UserContext } from '../contexts/userContext';
 import LoadingScreen from "../components/LoadingScreen";
+import { BACKEND_USER_URL, API_KEY } from '@env';
+import { theme } from "../core/theme";
 
 export default function Profile({ navigation }) {
   const { t } = useTranslation();
-  const { loggingOut, name: currentName, email: currentEmail, jwt } = useContext(UserContext);
+  const { loggingOut, name: currentName, email: currentEmail, jwt, setJWT, setName: setCurrentName, setEmail: setCurrentEmail } = useContext(UserContext);
   const [name, setName] = useState({ value: currentName || "", error: "" });
   const [email, setEmail] = useState({ value: currentEmail || "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });
   const [loading, setLoading] = useState();
+  const registerGuestURL = `${BACKEND_USER_URL}/register-guest`;
+  const [errorKey, setErrorKey] = useState();
 
   const updateUserDetails = () => {
     const nameError = nameValidator(name.value);
@@ -50,14 +54,40 @@ export default function Profile({ navigation }) {
       setPassword({ ...password, error: passwordError });
       return;
     }
+    
     setLoading(true);
-    // To simulate fetch TODO: Add fetch
-    setTimeout(() => {
-      navigation.reset({
-        index: 0,
-        routes: [{ name: "Battery" }],
-      });
-    }, 5000);
+    // Validate the login with the backend
+    fetch(registerGuestURL, {
+      method: 'PUT',
+      headers: {
+        "api-key": API_KEY,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email.value,
+        password: password.value,
+        name: name.value,
+      })
+    }).then((res) => res.json()).then((res) => {
+      console.log('res', res);
+      if ( res?.token ) {
+        setJWT(res.token);
+        setCurrentName(res.name);
+        setCurrentEmail(res.email);
+        // Move to main screen
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "Battery" }],
+        });
+      } else {
+        // There's an error with the backend
+        setErrorKey(res?.errorMessage || 'somethingWrong')
+      }
+    }).catch((err) => {
+      console.log('Error from backend', err);
+      setErrorKey(err?.errorMessage || 'somethingWrong')
+    });
+    setLoading(false);
   };
 
   const logOut = () => {
@@ -125,6 +155,7 @@ export default function Profile({ navigation }) {
         >
           {t( jwt == 'guest' ? `startScreen.signUp` : `updateScreen.updateButton`)}
         </Button>
+        { errorKey && <Text style={styles.errorText}>{t(`errors.${errorKey}`)}</Text>}
         <Button
           iconName="logout"
           mode="contained"
@@ -145,4 +176,10 @@ const styles = StyleSheet.create({
     justifyContent:"center",
     alignSelf:"center"
   },
+  errorText: {
+    color: theme.colors.error,
+    fontFamily: 'regularFont',
+    fontSize: 20,
+    textAlign: "center",
+  }
 });

@@ -15,7 +15,8 @@ export default function SuraNav({ ayat, wordPointer, suraIndex, ayaPointer, setA
   const [waitingServerResponse, setWaitingServerResponse] = useState(false);
   const [responseText, setResponseText] = useState();
   const prevDuration = useRef();
-  const recordingState = useRef();
+  //const recordingState = useRef();
+  const [recording, setRecording] = useState();
   const ayaPointerRef = useRef(ayaPointer);
   const URI = useRef();
   const arTrans = JsLingua.gserv('trans', 'ara');
@@ -30,39 +31,22 @@ export default function SuraNav({ ayat, wordPointer, suraIndex, ayaPointer, setA
     }
   }, []);
 
-  /* const checkStatus = async (e) => {
-    try {
-      //console.log('check status', new Date());
-      const duration = e.durationMillis / 1000;
-      URI.current = recordingState.current.getURI();
-
-      //console.log('duration', duration);
-      if(duration > 5 ){
-        stopRecording();
-        console.log('restart');
-        startRecording();
-      }
-      prevDuration.current = duration;
-    } catch(err) {
-      console.log('error', err);
-    }
-  } */
-
   const startRecording = async () => {
     try {
       if ( waitingServerResponse ) {
         return;
       }
+      /** */
       await Audio.requestPermissionsAsync();
       await Audio.setAudioModeAsync({
         allowsRecordingIOS: true,
         playsInSilentModeIOS: true,
       });
-      const { recording } = await Audio.Recording.createAsync( Audio.RecordingOptionsPresets.HIGH_QUALITY);
-      /* recording.setOnRecordingStatusUpdate(checkStatus);
-      recording.setProgressUpdateInterval(5000); // 5s */
-      await recording.startAsync();
-      recordingState.current = recording;
+
+      console.log('Starting recording..');
+      const { recording } = await Audio.Recording.createAsync( Audio.RecordingOptionsPresets.HIGH_QUALITY
+      );
+      setRecording(recording);
       setIsRecording(true);
     } catch (err) {
       console.error('Failed to start recording', err);
@@ -103,8 +87,13 @@ export default function SuraNav({ ayat, wordPointer, suraIndex, ayaPointer, setA
 
   const stopRecording = async () => {
     try {
-      URI.current = recordingState.current.getURI();
-      await recordingState.current.stopAndUnloadAsync();
+      setRecording(undefined);
+      await recording.stopAndUnloadAsync();
+      await Audio.setAudioModeAsync({
+        allowsRecordingIOS: false,
+      });
+      URI.current = recording.getURI();
+      
       setIsRecording(false);
       setWaitingServerResponse(true);
       const response = await FileSystem.uploadAsync(MODEL_URL, URI.current, {
@@ -170,9 +159,6 @@ export default function SuraNav({ ayat, wordPointer, suraIndex, ayaPointer, setA
           let newLevel = completedAyatLength >= 3 ? ayaPointerRef.current : completedAyatLength == 2 ? `0${ayaPointerRef.current}` : `00${ayaPointerRef.current}`;
           setLevel(Number(`${suraIndex}.${newLevel}`));
         }
-      } else {
-        // empty audio record
-        stopRecording();
       }
       setWaitingServerResponse(false);
     } catch ( err ) {

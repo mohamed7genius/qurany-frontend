@@ -34,21 +34,26 @@ export default function StartScreen({ navigation }) {
       <Button
         iconName="login"
         mode="contained"
-        onPress={() => navigation.navigate("LoginScreen")}
+        onPress={() => {
+          setLoading(true);
+          navigation.navigate("LoginScreen");
+        }}
       >
         {t(`startScreen.login`)}
       </Button>
       <Button
         iconName="person-add-alt"
         mode="contained"
-        onPress={() => navigation.navigate("RegisterScreen")}
+        onPress={() => {
+          setLoading(true);
+          navigation.navigate("RegisterScreen");
+        }}
       >
         {t(`startScreen.signUp`)}
       </Button>
       <TouchableOpacity
           style={i18n.dir()==="rtl" && Platform.OS === "android" ? styles.continueButtonContainerRTL : styles.continueButtonContainer}      
           onPress={() => {
-            console.log('set loading screen!');
             setLoading(true);
             setJWT('guest');
             navigation.reset({

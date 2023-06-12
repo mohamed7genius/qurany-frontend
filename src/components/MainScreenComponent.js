@@ -71,13 +71,13 @@ const styles = StyleSheet.create({
     paddingTop: StatusBar.currentHeight + 10,
     paddingHorizontal: 20,
     justifyContent: "space-between",
-    flexDirection: "row-reverse",
+    flexDirection: "row",
   },
   buttonsContainerRTL: {
     paddingTop: StatusBar.currentHeight + 10,
     paddingHorizontal: 20,
     justifyContent: "space-between",
-    flexDirection: "row",
+    flexDirection: "row-reverse",
   },
   childContainer: {
     justifyContent: "center",

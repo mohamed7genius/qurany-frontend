@@ -113,7 +113,7 @@ export default function RegisterScreen({ navigation }) {
           secureTextEntry
         />
       </View>
-      { errorKey && <Text>{t(`errors.${errorKey}`)}</Text> }
+      { errorKey && <Text style={styles.errorText}>{t(`errors.${errorKey}`)}</Text> }
       <Button
         iconName="person-add-alt"
         mode="contained"

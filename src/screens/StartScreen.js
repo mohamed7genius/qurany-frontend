@@ -35,7 +35,6 @@ export default function StartScreen({ navigation }) {
         iconName="login"
         mode="contained"
         onPress={() => {
-          setLoading(true);
           navigation.navigate("LoginScreen");
         }}
       >
@@ -45,7 +44,6 @@ export default function StartScreen({ navigation }) {
         iconName="person-add-alt"
         mode="contained"
         onPress={() => {
-          setLoading(true);
           navigation.navigate("RegisterScreen");
         }}
       >

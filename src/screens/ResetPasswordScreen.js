@@ -5,10 +5,16 @@ import TextInput from "../components/TextInput";
 import Button from "../components/Button";
 import { emailValidator } from "../helpers/emailValidator";
 import { useTranslation } from "react-i18next";
+import { BACKEND_USER_URL, API_KEY } from '@env';
+import LoadingScreen from "../components/LoadingScreen";
+import { theme } from "../core/theme";
 
 export default function ResetPasswordScreen({ navigation }) {
   const { t, i18n } = useTranslation();
   const [email, setEmail] = useState({ value: "", error: "" });
+  const [errorKey, setErrorKey] = useState();
+  const [loading, setLoading] = useState();
+  const resetPasswordURL = `${BACKEND_USER_URL}/forgot-password`;
 
   const sendResetPasswordEmail = () => {
     const emailError = emailValidator(email.value);
@@ -16,8 +22,34 @@ export default function ResetPasswordScreen({ navigation }) {
       setEmail({ ...email, error: emailError });
       return;
     }
-    navigation.navigate("LoginScreen");
+    // setLoading(true);
+    // Validate the login with the backend
+    fetch(resetPasswordURL, {
+      method: 'PUT',
+      headers: {
+        "api-key": API_KEY,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email.value,
+      })
+    }).then((res) => res.json()).then((res) => {
+      if ( res?.errorMessage ) {
+        // There's an error with the backend
+        setErrorKey(res?.errorMessage || 'somethingWrong')
+      } else {
+        setLoading(false);
+        navigation.navigate("LoginScreen");
+      }
+    }).catch((err) => {
+      console.log('Error from backend', err);
+      setErrorKey(err?.errorMessage || 'somethingWrong')
+    });
   };
+
+  if ( loading ) {
+    return <LoadingScreen />;
+  }
 
   return (
     <MainScreenComponent goBack={navigation.goBack}>
@@ -37,6 +69,7 @@ export default function ResetPasswordScreen({ navigation }) {
         keyboardType="email-address"
         description={t(`resetPasswordScreen.sentEmail`)}
       />
+      { errorKey && <Text style={styles.errorText}>{t(`errors.${errorKey}`)}</Text>}
       <Button
         iconName="settings-backup-restore"
         mode="contained"
@@ -73,4 +106,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     fontFamily: "regularFont",
   },
+  errorText: {
+    color: theme.colors.error,
+    fontFamily: 'regularFont',
+    fontSize: 20,
+    textAlign: "center",
+  }
 });

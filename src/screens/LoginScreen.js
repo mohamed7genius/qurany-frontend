@@ -91,7 +91,7 @@ export default function LoginScreen({ navigation }) {
         errorText={password.error}
         secureTextEntry
       />
-      { errorKey && <Text>{t(`errors.${errorKey}`)}</Text> }
+      { errorKey && <Text style={styles.errorText}>{t(`errors.${errorKey}`)}</Text> }
       <Button iconName="login" mode="contained" onPress={onLoginPressed}>
         {t(`startScreen.login`)}
       </Button>

@@ -31,7 +31,8 @@
         "passwordError":"Password can't be empty",
         "nameError":"Name can't be empty",
         "somethingWrong": "Something wrong happened, kindly try again later.",
-        "guest": "Kindly go to profile page to sign up, so you can see other people scores!"
+        "guest": "Kindly go to profile page to sign up, so you can see other people scores!",
+        "invalidCredentials": "Your account information is wrong, kindly try again"
     },
     "resetPasswordScreen": {
         "restoreText": "Restore Password",

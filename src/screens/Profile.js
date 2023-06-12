@@ -52,6 +52,7 @@ export default function Profile({ navigation }) {
         // There's an error with the backend
         setErrorKey(res?.errorMessage || 'somethingWrong')
       } else {
+        setCurrentName(name.value);
         setLoading(false);
         // Move to main screen
         navigation.reset({

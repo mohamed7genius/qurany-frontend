@@ -22,26 +22,48 @@ export default function Profile({ navigation }) {
   const [password, setPassword] = useState({ value: "", error: "" });
   const [loading, setLoading] = useState();
   const registerGuestURL = `${BACKEND_USER_URL}/register-guest`;
+  const updateUserData = `${BACKEND_USER_URL}/update-account`;
   const [errorKey, setErrorKey] = useState();
 
   const updateUserDetails = () => {
     const nameError = nameValidator(name.value);
-    const emailError = emailValidator(email.value);
     const passwordError = passwordValidator(password.value);
-    if (emailError || passwordError || nameError) {
+    if (passwordError || nameError) {
       setName({ ...name, error: nameError });
-      setEmail({ ...email, error: emailError });
       setPassword({ ...password, error: passwordError });
       return;
     }
     setLoading(true);
-    // To simulate fetch TODO: Add fetch
-    setTimeout(() => {
-      navigation.reset({
-        index: 0,
-        routes: [{ name: "Battery" }],
-      });
-    }, 5000);
+    // Validate the login with the backend
+    fetch(updateUserData, {
+      method: 'PUT',
+      headers: {
+        "api-key": API_KEY,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email.value,
+        password: password.value,
+        name: name.value,
+        token: jwt,
+      })
+    }).then((res) => res.json()).then((res) => {
+      if ( res?.errorMessage ) {
+        // There's an error with the backend
+        setErrorKey(res?.errorMessage || 'somethingWrong')
+      } else {
+        setLoading(false);
+        // Move to main screen
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "Battery" }],
+        });
+      }
+    }).catch((err) => {
+      console.log('Error from backend', err);
+      setErrorKey(err?.errorMessage || 'somethingWrong')
+    });
+    setLoading(false);
   };
 
   const registerUser = () => {
@@ -121,12 +143,14 @@ export default function Profile({ navigation }) {
           label={t(`loginScreen.email`)}
           returnKeyType="next"
           value={email.value}
-          onChangeText={(text) =>
-            setEmail({
-              value: text,
-              error: "",
-            })
-          }
+          onChangeText={(text) => {
+            if ( jwt == 'guest' ) {
+              setEmail({
+                value: text,
+                error: "",
+              })
+            }
+          }}
           error={!!email.error}
           errorText={t(email.error)}
           autoCapitalize="none"
